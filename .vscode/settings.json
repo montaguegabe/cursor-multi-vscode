@@ -1,0 +1,17 @@
+{
+    "files.exclude": {
+        "out": false
+    },
+    "search.exclude": {
+        "out": true
+    },
+    "typescript.tsc.autoDetect": "off",
+    "typescript": true,
+    "workbench.colorCustomizations": {
+        "titleBar.activeBackground": "#2b4f77",
+        "titleBar.inactiveBackground": "#2b4f77"
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "prettier.tabWidth": 4
+}
