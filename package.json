@@ -13,6 +13,18 @@
         "onStartupFinished"
     ],
     "main": "./out/extension.js",
+    "contributes": {
+        "configuration": {
+            "title": "Cursor Multi",
+            "properties": {
+                "cursorMulti.executablePath": {
+                    "type": "string",
+                    "default": "multi",
+                    "description": "Path to the multi executable. By default uses 'multi' from PATH."
+                }
+            }
+        }
+    },
     "scripts": {
         "vscode:prepublish": "npm run compile",
         "compile": "tsc -p ./",

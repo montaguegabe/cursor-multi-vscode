@@ -51,7 +51,10 @@ async function getRepoFolders(workspaceRoot: string): Promise<string[]> {
 
 async function runMultiSync(type: 'vscode' | 'rules' | null, workspaceRoot: string) {
     try {
-        const cmd = type ? `multi sync ${type}` : 'multi sync';
+        const multiPath = vscode.workspace
+            .getConfiguration('cursorMulti')
+            .get('executablePath', 'multi');
+        const cmd = type ? `${multiPath} sync ${type}` : `${multiPath} sync`;
         await execAsync(cmd, { cwd: workspaceRoot });
         outputChannel.appendLine(`Successfully ran ${cmd}`);
     } catch (error) {
