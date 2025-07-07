@@ -1,9 +1,9 @@
-import * as vscode from 'vscode';
+import { exec } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
-import { outputChannel } from './outputChannel';
-import { exec } from 'child_process';
 import { promisify } from 'util';
+import * as vscode from 'vscode';
+import { outputChannel } from './outputChannel';
 
 const execAsync = promisify(exec);
 
@@ -52,7 +52,7 @@ async function getRepoFolders(workspaceRoot: string): Promise<string[]> {
 async function runMultiSync(type: 'vscode' | 'rules' | null, workspaceRoot: string) {
     try {
         const multiPath = vscode.workspace
-            .getConfiguration('cursorMulti')
+            .getConfiguration('vscodeMulti')
             .get('executablePath', 'multi');
         const cmd = type ? `${multiPath} sync ${type}` : `${multiPath} sync`;
         await execAsync(cmd, { cwd: workspaceRoot });
@@ -66,7 +66,7 @@ async function runMultiSync(type: 'vscode' | 'rules' | null, workspaceRoot: stri
 }
 
 export async function activate(context: vscode.ExtensionContext) {
-    outputChannel.appendLine('Cursor Multi extension activated');
+    outputChannel.appendLine('VS Code Multi extension activated');
     const workspaceRoot = vscode.workspace.workspaceFolders?.[0].uri.fsPath;
     if (!workspaceRoot) {
         outputChannel.appendLine('No workspace folder found');
@@ -239,40 +239,15 @@ export async function activate(context: vscode.ExtensionContext) {
                 });
 
                 context.subscriptions.push(vscodeWatcher);
-
-                // Watch .cursor/rules folder
-                const cursorRulesPath = path.join(repoFolder, '.cursor', 'rules');
-                if (fs.existsSync(cursorRulesPath)) {
-                    const cursorWatcher = vscode.workspace.createFileSystemWatcher(
-                        new vscode.RelativePattern(cursorRulesPath, '**/*')
-                    );
-
-                    cursorWatcher.onDidChange(async () => {
-                        outputChannel.appendLine(`Changes detected in ${cursorRulesPath}`);
-                        await runMultiSync('rules', workspaceRoot);
-                    });
-
-                    cursorWatcher.onDidCreate(async () => {
-                        outputChannel.appendLine(`New file created in ${cursorRulesPath}`);
-                        await runMultiSync('rules', workspaceRoot);
-                    });
-
-                    cursorWatcher.onDidDelete(async () => {
-                        outputChannel.appendLine(`File deleted in ${cursorRulesPath}`);
-                        await runMultiSync('rules', workspaceRoot);
-                    });
-
-                    context.subscriptions.push(cursorWatcher);
-                }
             }
         }
 
         outputChannel.appendLine(
-            'Cursor Multi extension activated with file watchers and debug tracking'
+            'VS Code Multi extension activated with file watchers and debug tracking'
         );
 
         runMultiSync(null, workspaceRoot);
     } catch (error) {
-        outputChannel.appendLine(`Error activating Cursor Multi extension: ${error}`);
+        outputChannel.appendLine(`Error activating VS Code Multi extension: ${error}`);
     }
 }

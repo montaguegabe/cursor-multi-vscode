@@ -1,8 +1,15 @@
 {
-    "name": "cursor-multi",
-    "displayName": "Cursor Multi",
-    "description": "Manage multiple Git repos for Cursor",
+    "name": "vscode-multi",
+    "displayName": "VS Code Multi",
+    "description": "Manage multiple Git repos for VS Code/Cursor",
     "version": "1.0.1",
+    "publisher": "montaguegabe",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/montaguegabe/vscode-multi-vscode"
+    },
+    "icon": "images/icon.png",
     "engines": {
         "vscode": "^1.96.0"
     },
@@ -15,9 +22,9 @@
     "main": "./out/extension.js",
     "contributes": {
         "configuration": {
-            "title": "Cursor Multi",
+            "title": "VS Code Multi",
             "properties": {
-                "cursorMulti.executablePath": {
+                "vscodeMulti.executablePath": {
                     "type": "string",
                     "default": "multi",
                     "description": "Path to the multi executable. By default uses 'multi' from PATH."
@@ -32,7 +39,7 @@
         "pretest": "npm run compile && npm run lint",
         "lint": "eslint src",
         "test": "vscode-test",
-        "install-extension": "vsce package --allow-missing-repository && cursor --install-extension cursor-multi-1.0.1.vsix"
+        "install-extension": "vsce package --allow-missing-repository && cursor --install-extension vscode-multi-1.0.1.vsix"
     },
     "devDependencies": {
         "@types/mocha": "^10.0.10",
