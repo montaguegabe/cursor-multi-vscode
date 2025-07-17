@@ -4,4 +4,4 @@ globs:
 alwaysApply: true
 ---
 
-For logging, use the output channel defined in [outputChannel.ts](mdc:vscode-multi-vscode/src/outputChannel.ts). Use sparingly.
+For logging, use the output channel defined in [outputChannel.ts](mdc:vscode-multi-extension/src/outputChannel.ts). Use sparingly.
